@@ -3,6 +3,7 @@ import axios from 'axios';
 import FormGestionPoutine from './FormGestionPoutine';
 import Tableau from './Tableau';
 import FormCleApi from './FormCleApi';
+const apiKey = 'Weepinbell_pCLtv';
 
 class GestionPoutine extends React.Component {
     constructor(props) {
@@ -24,7 +25,11 @@ class GestionPoutine extends React.Component {
 
     componentDidMount() {
         // Sélectionner la liste de poutines par un appel à l'api
-        axios.get('http://127.0.0.1/final-api/poutine')
+        axios.get('http://127.0.0.1/final-api/poutine'/* , {
+            headers: {
+                Authorization: "api_key " + apiKey,
+            }
+          } */)
         .then((response) => {
             const poutines = response.data.poutines;
             // On récupère les données reçues et on modifie le tableau dans l'état
@@ -132,17 +137,19 @@ class GestionPoutine extends React.Component {
     }
     
     regenererCleApi = (codeUsager, motDePasse) => {
+        //Preparer les parametres
+        let token = "basic " + btoa(codeUsager + " " + motDePasse);
+
         // Request a new API key for the user provided.
         axios({
             method: 'get',
             url: 'http://127.0.0.1/final-api/cle',
-            data: {
-                "codeUsager": codeUsager,
-                "motDePasse": motDePasse
+            headers: {
+                Authorization: token
             }
         })
         .then((response) => {
-            let nouvelleCleApi = response.data.cleApi;
+            let nouvelleCleApi = response.data.cle_api;
             if (nouvelleCleApi==null) nouvelleCleApi=response.data.messageErreur;
             // On récupère les données reçues et on modifie le tableau dans l'état
             this.setState({cleApiAffichee : nouvelleCleApi});
