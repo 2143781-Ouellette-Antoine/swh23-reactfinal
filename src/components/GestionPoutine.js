@@ -27,7 +27,7 @@ class GestionPoutine extends React.Component {
         // Sélectionner la liste de poutines par un appel à l'api
         axios.get('http://127.0.0.1/final-api/poutine'/* , {
             headers: {
-                Authorization: "api_key " + apiKey,
+                Authorization: "api_key " + apiKey
             }
           } */)
         .then((response) => {
@@ -78,7 +78,10 @@ class GestionPoutine extends React.Component {
             data: {
                 nom: this.state.poutineSelect.nom,
                 description: this.state.poutineSelect.description
-            }
+            }/* ,
+            headers: {
+                Authorization: "api_key " + apiKey
+            } */
         })
         .then((response) => {
             // Sur un succès, récupère la nouvelle poutine dans la réponse de la requête
@@ -100,7 +103,10 @@ class GestionPoutine extends React.Component {
             data: {
                 nom: this.state.poutineSelect.nom,
                 description: this.state.poutineSelect.description
-            }
+            }/* ,
+            headers: {
+                Authorization: "api_key " + apiKey
+            } */
         })
         // Sur un succès, modifie l'item de listePoutine qui correspond a la poutine modifiée par la nouvelle poutine
         .then((response) => {
@@ -138,7 +144,7 @@ class GestionPoutine extends React.Component {
     
     regenererCleApi = (codeUsager, motDePasse) => {
         //Preparer les parametres
-        let token = "basic " + btoa(codeUsager + " " + motDePasse);
+        let token = "basic " + btoa(codeUsager + " " + motDePasse)/* + "api_key " + apiKey */;
 
         // Request a new API key for the user provided.
         axios({
